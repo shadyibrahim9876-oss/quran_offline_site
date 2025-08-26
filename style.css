@@ -1,57 +1,74 @@
+
 body {
     font-family: 'Arial', sans-serif;
-    text-align: center;
-    background: #f2f2f2;
+    background-color: #f9f9f9;
     margin: 0;
     padding: 0;
+    text-align: center;
+    direction: rtl;
 }
 
 header {
-    background: #004d40;
+    background: #006400;
     color: white;
-    padding: 20px;
+    padding: 15px;
 }
 
 .logo {
-    width: 100px;
+    width: 90px;
     margin-bottom: 10px;
 }
 
+h1 {
+    font-size: 22px;
+}
+
 .bismillah {
-    font-size: 36px;
+    font-size: 26px;
     font-weight: bold;
-    color: #ffeb3b;
-    text-shadow: 2px 2px 8px black;
+    margin: 10px 0;
+    color: gold;
 }
 
 .controls {
-    margin: 20px;
+    margin: 20px auto;
 }
 
-select, input[type="text"] {
-    padding: 10px;
+#searchBox {
+    padding: 8px;
     font-size: 16px;
-    margin: 5px;
+    width: 200px;
+}
+
+#surahSelect {
+    padding: 8px;
+    font-size: 16px;
+    margin-right: 10px;
 }
 
 .player button {
-    margin: 10px;
-    padding: 10px 15px;
-    font-size: 16px;
+    font-size: 22px;
+    margin: 5px;
+    padding: 8px 14px;
+    cursor: pointer;
+    border: none;
+    background-color: #006400;
+    color: white;
+    border-radius: 5px;
+}
+
+.player button:hover {
+    background-color: #228B22;
 }
 
 .time {
     margin-top: 10px;
+    font-size: 16px;
 }
 
 footer {
     margin-top: 30px;
-    background: #004d40;
-    color: white;
     padding: 10px;
-}
-
-footer .dev {
     font-size: 14px;
-    color: #ccc;
+    color: gray;
 }

@@ -1,108 +1,100 @@
-const audio = document.getElementById("audioPlayer");
-const playPauseBtn = document.getElementById("playPauseBtn");
-const prevBtn = document.getElementById("prevBtn");
-const nextBtn = document.getElementById("nextBtn");
-const repeatBtn = document.getElementById("repeatBtn");
-const currentTimeEl = document.getElementById("currentTime");
-const durationEl = document.getElementById("duration");
-const surahSelect = document.getElementById("surahSelect");
-const searchBox = document.getElementById("searchBox");
 
-let currentSurah = 1;
-let isRepeating = false;
+const audioPlayer = document.getElementById('audioPlayer');
+const playPauseBtn = document.getElementById('playPauseBtn');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const repeatBtn = document.getElementById('repeatBtn');
+const surahSelect = document.getElementById('surahSelect');
+const searchBox = document.getElementById('searchBox');
+const currentTimeEl = document.getElementById('currentTime');
+const durationEl = document.getElementById('duration');
 
-const surahNames = [
-    "الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال",
-    "التوبة","يونس","هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء",
-    "الكهف","مريم","طه","الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء",
-    "النمل","القصص","العنكبوت","الروم","لقمان","السجدة","الأحزاب","سبأ","فاطر",
-    "يس","الصافات","ص","الزمر","غافر","فصلت","الشورى","الزخرف","الدخان","الجاثية",
-    "الأحقاف","محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم","القمر",
-    "الرحمن","الواقعة","الحديد","المجادلة","الحشر","الممتحنة","الصف","الجمعة",
-    "المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة","المعارج",
-    "نوح","الجن","المزمل","المدثر","القيامة","الإنسان","المرسلات","النبأ","النازعات",
-    "عبس","التكوير","الإنفطار","المطففين","الإنشقاق","البروج","الطارق","الأعلى",
-    "الغاشية","الفجر","البلد","الشمس","الليل","الضحى","الشرح","التين","العلق",
-    "القدر","البينة","الزلزلة","العاديات","القارعة","التكاثر","العصر","الهمزة",
-    "الفيل","قريش","الماعون","الكوثر","الكافرون","النصر","المسد","الإخلاص","الفلق","الناس"
+let surahs = [
+    "الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة",
+    "يونس","هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه",
+    "الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء","النمل","القصص","العنكبوت",
+    "الروم","لقمان","السجدة","الأحزاب","سبأ","فاطر","يس","الصافات","ص","الزمر","غافر",
+    "فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف","محمد","الفتح","الحجرات",
+    "ق","الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة",
+    "الحشر","الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم",
+    "الملك","القلم","الحاقة","المعارج","نوح","الجن","المزمل","المدثر","القيامة",
+    "الإنسان","المرسلات","النبأ","النازعات","عبس","التكوير","الانفطار","المطففين",
+    "الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد","الشمس","الليل",
+    "الضحى","الشرح","التين","العلق","القدر","البينة","الزلزلة","العاديات","القارعة",
+    "التكاثر","العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر",
+    "المسد","الإخلاص","الفلق","الناس"
 ];
 
-function loadSurah(num) {
-    audio.src = `audio/${String(num).padStart(3, '0')}.mp3`;
-    audio.play();
-    playPauseBtn.textContent = "⏸️ إيقاف مؤقت";
-    surahSelect.value = num;
+let currentSurah = 0;
+let isRepeating = false;
+
+function loadSurahs() {
+    surahSelect.innerHTML = '';
+    surahs.forEach((surah, index) => {
+        let option = document.createElement('option');
+        option.value = index;
+        option.textContent = (index+1) + " - " + surah;
+        surahSelect.appendChild(option);
+    });
 }
 
-function updateTime() {
-    currentTimeEl.textContent = formatTime(audio.currentTime);
-    durationEl.textContent = formatTime(audio.duration);
+function playSurah(index) {
+    currentSurah = index;
+    audioPlayer.src = "audio/" + String(index+1).padStart(3,'0') + ".mp3";
+    audioPlayer.play();
+    playPauseBtn.textContent = "⏸️";
 }
 
-function formatTime(seconds) {
-    if (isNaN(seconds)) return "00:00";
-    let m = Math.floor(seconds / 60);
-    let s = Math.floor(seconds % 60);
-    return `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
-}
-
-playPauseBtn.addEventListener("click", () => {
-    if (audio.paused) {
-        audio.play();
-        playPauseBtn.textContent = "⏸️ إيقاف مؤقت";
+playPauseBtn.addEventListener('click', () => {
+    if (audioPlayer.paused) {
+        audioPlayer.play();
+        playPauseBtn.textContent = "⏸️";
     } else {
-        audio.pause();
-        playPauseBtn.textContent = "▶️ تشغيل";
+        audioPlayer.pause();
+        playPauseBtn.textContent = "▶️";
     }
 });
 
-prevBtn.addEventListener("click", () => {
-    if (currentSurah > 1) {
-        currentSurah--;
-        loadSurah(currentSurah);
-    }
+prevBtn.addEventListener('click', () => {
+    if (currentSurah > 0) playSurah(currentSurah - 1);
 });
 
-nextBtn.addEventListener("click", () => {
-    if (currentSurah < 114) {
-        currentSurah++;
-        loadSurah(currentSurah);
-    }
+nextBtn.addEventListener('click', () => {
+    if (currentSurah < surahs.length - 1) playSurah(currentSurah + 1);
 });
 
-repeatBtn.addEventListener("click", () => {
+repeatBtn.addEventListener('click', () => {
     isRepeating = !isRepeating;
-    repeatBtn.style.background = isRepeating ? "lightgreen" : "";
+    repeatBtn.style.backgroundColor = isRepeating ? "orange" : "#006400";
 });
 
-audio.addEventListener("ended", () => {
-    if (isRepeating) {
-        loadSurah(currentSurah);
-    } else if (currentSurah < 114) {
-        currentSurah++;
-        loadSurah(currentSurah);
-    }
+audioPlayer.addEventListener('ended', () => {
+    if (isRepeating) playSurah(currentSurah);
+    else if (currentSurah < surahs.length - 1) playSurah(currentSurah + 1);
 });
 
-audio.addEventListener("timeupdate", updateTime);
-
-surahNames.forEach((name, index) => {
-    let opt = document.createElement("option");
-    opt.value = index + 1;
-    opt.textContent = `${index + 1} - ${name}`;
-    surahSelect.appendChild(opt);
+audioPlayer.addEventListener('timeupdate', () => {
+    currentTimeEl.textContent = formatTime(audioPlayer.currentTime);
+    durationEl.textContent = formatTime(audioPlayer.duration);
 });
 
-surahSelect.addEventListener("change", () => {
-    currentSurah = parseInt(surahSelect.value);
-    loadSurah(currentSurah);
-});
+function formatTime(sec) {
+    if (isNaN(sec)) return "00:00";
+    let m = Math.floor(sec / 60);
+    let s = Math.floor(sec % 60);
+    return String(m).padStart(2,'0') + ":" + String(s).padStart(2,'0');
+}
 
-searchBox.addEventListener("input", () => {
+searchBox.addEventListener('input', () => {
     let term = searchBox.value.trim();
-    for (let option of surahSelect.options) {
-        option.hidden = !option.textContent.includes(term);
+    for (let i = 0; i < surahSelect.options.length; i++) {
+        let txt = surahSelect.options[i].text;
+        surahSelect.options[i].style.display = txt.includes(term) ? "" : "none";
     }
 });
 
-loadSurah(currentSurah);
+surahSelect.addEventListener('change', () => {
+    playSurah(parseInt(surahSelect.value));
+});
+
+loadSurahs();
