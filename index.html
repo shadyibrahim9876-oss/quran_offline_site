@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>تسجيلات القرآن الكريم — تشغيل دون إنترنت</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0e6b5f">
+  <link rel="icon" href="assets/icon-192.png">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="preload" as="fetch" href="assets/surahs.json" crossorigin="anonymous">
+  <style>
+    :root { --bg:#0b3b36; --card:#103f39; --text:#fff; --muted:#d7f0ea; --accent:#23a391; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Tahoma, Arial, sans-serif; background: var(--bg); color: var(--text); }
+    header { padding: 16px; text-align:center; background: linear-gradient(180deg, #114c44, transparent); }
+    h1 { font-size: 20px; margin: 0; }
+    .container { max-width: 780px; margin: 0 auto; padding: 12px; }
+    .player { background: var(--card); border-radius: 14px; padding: 16px; box-shadow: 0 6px 18px rgba(0,0,0,.3); }
+    .title { font-weight: 700; font-size: 18px; line-height: 1.6; }
+    .controls { display:flex; gap: 10px; align-items:center; margin-top: 10px; flex-wrap: wrap; }
+    button { border: 0; border-radius: 10px; padding: 10px 14px; font-size: 16px; cursor: pointer; background: var(--accent); color: #002; }
+    button.secondary { background: #145b51; color: var(--muted); }
+    button:disabled { opacity: .5; cursor: not-allowed; }
+    .progress { width: 100%; height: 10px; background: rgba(255,255,255,.2); border-radius: 6px; margin: 10px 0; position: relative; }
+    .bar { position:absolute; left:0; top:0; bottom:0; width:0%; background:#26d0ba; border-radius:6px; }
+    .time { display:flex; justify-content:space-between; font-size: 13px; color: var(--muted); }
+    .list { margin-top: 16px; background: rgba(255,255,255,.04); border-radius: 12px; padding: 8px; max-height: 50vh; overflow:auto; }
+    .item { display:flex; align-items:center; gap: 10px; padding: 8px; border-radius: 8px; cursor: pointer; }
+    .item:hover { background: rgba(255,255,255,.06); }
+    .item.active { background: rgba(35,163,145,.2); }
+    .num { opacity: .8; width: 40px; text-align:center; font-variant-numeric: tabular-nums; }
+    footer { text-align:center; font-size: 12px; color: var(--muted); padding: 16px; opacity: .9; }
+    .hint { font-size: 13px; color: var(--muted); margin-top: 6px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>تسجيلات القرآن الكريم — تشغيل دون إنترنت</h1>
+    <div class="hint">اضف الملفات الصوتية داخل مجلد <b>audio</b> بأسماء 001.mp3 … 114.mp3</div>
+  </header>
+
+  <div class="container">
+    <div class="player">
+      <div class="title" id="title">—</div>
+      <div class="controls">
+        <button id="prev">السورة السابقة ⏮️</button>
+        <button id="play">تشغيل ▶️</button>
+        <button id="pause" class="secondary" style="display:none">إيقاف مؤقت ⏸️</button>
+        <button id="next">السورة التالية ⏭️</button>
+        <button id="repeat" class="secondary">تكرار 🔁</button>
+      </div>
+      <div class="progress" id="progress"><div class="bar" id="bar"></div></div>
+      <div class="time"><span id="cur">00:00</span><span id="dur">00:00</span></div>
+      <audio id="audio" preload="auto"></audio>
+    </div>
+
+    <div class="list" id="list" aria-label="قائمة السور"></div>
+  </div>
+
+  <footer>صدقة جارية — يمكنك نشر المجلد للناس ليعمل دون إنترنت تمامًا</footer>
+
+  <script>
+  const pad3 = n => String(n).padStart(3,'0');
+  let surahs = [];
+  let i = 0;
+  let repeatOne = false;
+
+  async function loadSurahs() {
+    const data = await fetch('assets/surahs.json').then(r=>r.json());
+    surahs = data.surahs;
+    buildList();
+    loadTrack(0);
+    try { navigator.serviceWorker && navigator.serviceWorker.register('service-worker.js'); } catch(e){}
+  }
+
+  function buildList() {
+    const list = document.getElementById('list');
+    list.innerHTML = '';
+    surahs.forEach((name, idx)=>{
+      const el = document.createElement('div');
+      el.className = 'item';
+      el.dataset.index = idx;
+      el.innerHTML = `<div class="num">${pad3(idx+1)}</div><div>${name}</div>`;
+      el.onclick = ()=>{ loadTrack(idx); play(); };
+      list.appendChild(el);
+    });
+    markActive();
+  }
+
+  function audioSrc(index){ return `audio/${pad3(index+1)}.mp3`; }
+
+  function loadTrack(index){
+    i = index;
+    const audio = document.getElementById('audio');
+    audio.src = audioSrc(i);
+    document.getElementById('title').textContent = `سورة ${surahs[i]} — (${pad3(i+1)})`;
+    markActive();
+    if ('mediaSession' in navigator) {
+      navigator.mediaSession.metadata = new MediaMetadata({title: `سورة ${surahs[i]}`, artist: 'تلاوة القرآن الكريم'});
+    }
+  }
+
+  function markActive(){
+    document.querySelectorAll('.item').forEach((el, idx)=>{
+      el.classList.toggle('active', idx===i);
+    });
+  }
+
+  function play(){
+    const a = document.getElementById('audio');
+    a.play();
+    document.getElementById('play').style.display='none';
+    document.getElementById('pause').style.display='inline-block';
+  }
+  function pause(){
+    const a = document.getElementById('audio');
+    a.pause();
+    document.getElementById('play').style.display='inline-block';
+    document.getElementById('pause').style.display='none';
+  }
+
+  function next(){ loadTrack( (i+1)%surahs.length ); play(); }
+  function prev(){ loadTrack( (i-1+surahs.length)%surahs.length ); play(); }
+
+  function fmt(t){
+    if(isNaN(t)) return '00:00';
+    const m = Math.floor(t/60); const s = Math.floor(t%60);
+    return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+  }
+
+  function setup() {
+    const a = document.getElementById('audio');
+    const bar = document.getElementById('bar');
+    const progress = document.getElementById('progress');
+    a.addEventListener('timeupdate', ()=>{
+      const p = (a.currentTime / (a.duration||1))*100;
+      bar.style.width = p+'%';
+      document.getElementById('cur').textContent = fmt(a.currentTime);
+      document.getElementById('dur').textContent = fmt(a.duration);
+    });
+    a.addEventListener('ended', ()=>{
+      if (repeatOne) { a.currentTime = 0; play(); }
+      else { next(); }
+    });
+    progress.addEventListener('click', (e)=>{
+      const rect = progress.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width;
+      a.currentTime = x * (a.duration||0);
+    });
+
+    document.getElementById('play').onclick = play;
+    document.getElementById('pause').onclick = pause;
+    document.getElementById('next').onclick = next;
+    document.getElementById('prev').onclick = prev;
+    document.getElementById('repeat').onclick = ()=>{
+      repeatOne = !repeatOne;
+      document.getElementById('repeat').classList.toggle('active', repeatOne);
+    };
+
+    if ('mediaSession' in navigator) {
+      navigator.mediaSession.setActionHandler('play', play);
+      navigator.mediaSession.setActionHandler('pause', pause);
+      navigator.mediaSession.setActionHandler('previoustrack', prev);
+      navigator.mediaSession.setActionHandler('nexttrack', next);
+      navigator.mediaSession.setActionHandler('seekto', (details)=>{ a.currentTime = details.seekTime; });
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', ()=>{ setup(); loadSurahs(); });
+  </script>
+</body>
+</html>
