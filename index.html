@@ -1,72 +1,80 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>القرآن الكريم - الشيخ عبد الباسط عبد الصمد (مجود)</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="https://surahquran.com/img/blog/quran.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>القرآن الكريم - الشيخ عبد الباسط عبد الصمد (مجود)</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="https://surahquran.com/img/blog/quran.png">
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DF7YR27LJC"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-DF7YR27LJC');
-    </script>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DF7YR27LJC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DF7YR27LJC');
+</script>
 
-    <!-- Manifest & PWA -->
-    <link rel="manifest" href="manifest.json">
-    <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('service-worker.js')
-          .then(() => console.log('Service Worker Registered'))
-          .catch(err => console.log('SW registration failed:', err));
-      }
-    </script>
+<!-- Manifest & PWA -->
+<link rel="manifest" href="manifest.json">
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(() => console.log('Service Worker Registered'))
+      .catch(err => console.log('SW registration failed:', err));
+  }
+</script>
 </head>
 <body>
 
-    <!-- شريط علوي: الأدعية + مواقيت الصلاة -->
-    <div class="top-bar">
-        <div class="scroll-text" id="scrollText"></div>
-        <div class="prayer-times" id="prayerTimes"></div>
-        <div class="date-time" id="dateTime"></div>
+<!-- شريط الأدعية العلوي -->
+<div class="top-bar">
+  <div class="scroll-text" id="scrollText"></div>
+</div>
+
+<!-- شريط مواعيد الصلاة -->
+<div class="prayer-bar">
+  <div class="scroll-text" id="prayerTimes"></div>
+</div>
+
+<!-- شريط التاريخ والوقت -->
+<div class="date-time-bar">
+  <div id="dateTime"></div>
+</div>
+
+<header>
+  <img src="https://surahquran.com/img/blog/quran.png" alt="القرآن الكريم" class="logo">
+  <h1>مرحباً بكم في موقع القرآن الكريم</h1>
+  <h2 class="bismillah">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</h2>
+  <h3>الشيخ عبد الباسط عبد الصمد (مجود)</h3>
+</header>
+
+<main>
+  <div class="controls">
+    <input type="text" id="searchBox" placeholder="ابحث عن اسم السورة">
+    <select id="surahSelect"></select>
+  </div>
+
+  <ul id="surah-list"></ul>
+
+  <div class="player">
+    <button id="prevBtn">⏮️</button>
+    <button id="playPauseBtn">▶️</button>
+    <button id="nextBtn">⏭️</button>
+    <button id="repeatBtn">🔁</button>
+    <div class="time">
+      <span id="currentTime">00:00</span> / <span id="duration">00:00</span>
     </div>
+  </div>
+</main>
 
-    <header>
-        <img src="https://surahquran.com/img/blog/quran.png" alt="القرآن الكريم" class="logo">
-        <h1>مرحباً بكم في موقع القرآن الكريم</h1>
-        <h2 class="bismillah">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</h2>
-        <h3>الشيخ عبد الباسط عبد الصمد (مجود)</h3>
-    </header>
+<footer>
+  <p>صدقة جارية عن جميع المسلمين<br>داعين الله أن يتقبلها منا جميعاً</p>
+  <p class="dev">المطور: فاعل خير</p>
+</footer>
 
-    <main>
-        <div class="controls">
-            <input type="text" id="searchBox" placeholder="ابحث عن اسم السورة">
-            <select id="surahSelect"></select>
-        </div>
-
-        <ul id="surah-list"></ul>
-
-        <div class="player">
-            <button id="prevBtn">⏮️</button>
-            <button id="playPauseBtn">▶️</button>
-            <button id="nextBtn">⏭️</button>
-            <button id="repeatBtn">🔁</button>
-            <div class="time">
-                <span id="currentTime">00:00</span> / <span id="duration">00:00</span>
-            </div>
-        </div>
-    </main>
-
-    <footer>
-        <p>صدقة جارية عن جميع المسلمين<br>داعين الله أن يتقبلها منا جميعاً</p>
-        <p class="dev">المطور: فاعل خير</p>
-    </footer>
-
-    <audio id="audioPlayer"></audio>
-    <script src="script.js"></script>
+<audio id="audioPlayer"></audio>
+<script src="script.js"></script>
 </body>
 </html>
