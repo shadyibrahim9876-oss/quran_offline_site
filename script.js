@@ -175,3 +175,19 @@ const sideMenu = document.getElementById("sideMenu");
 menuBtn.addEventListener("click", () => {
     sideMenu.classList.toggle("open");
 });
+
+// ===== قائمة جانبية =====
+const sideMenu = document.getElementById('sideMenu');
+const menuToggle = document.getElementById('menuToggle');
+
+menuToggle.addEventListener('click', () => {
+    sideMenu.classList.toggle('open');
+});
+
+// إغلاق القائمة عند الضغط على خيار
+const menuLinks = document.querySelectorAll('#sideMenu a');
+menuLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        sideMenu.classList.remove('open');
+    });
+});
