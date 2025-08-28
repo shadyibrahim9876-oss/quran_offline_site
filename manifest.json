@@ -3,17 +3,16 @@
   "short_name": "القرآن الكريم",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#0b3b36",
-  "theme_color": "#23a391",
-  "description": "استمع إلى القرآن الكريم مع الشيخ عبد الباسط عبد الصمد مجود",
+  "background_color": "#023c36",
+  "theme_color": "#023c36",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "https://surahquran.com/img/blog/quran.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icon-512.png",
+      "src": "https://surahquran.com/img/blog/quran.png",
       "sizes": "512x512",
       "type": "image/png"
     }

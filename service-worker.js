@@ -1,43 +1,33 @@
-const CACHE_NAME = "quran-app-cache-v1";
-const urlsToCache = [
-  "./",
-  "./index.html",
-  "./style.css",
-  "./script.js",
-  "./surahs.json",
-  "./icon-192.png",
-  "./icon-512.png"
+const cacheName = 'quran-site-cache-v1';
+const assets = [
+  './',
+  './index.html',
+  './style.css',
+  './script.js',
+  './surahs.json',
+  'https://surahquran.com/img/blog/quran.png'
 ];
 
-// تثبيت الخدمة وتخزين الملفات
-self.addEventListener("install", event => {
+self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(urlsToCache);
-    })
+    caches.open(cacheName)
+      .then(cache => cache.addAll(assets))
+      .then(() => self.skipWaiting())
   );
 });
 
-// تفعيل الخدمة
-self.addEventListener("activate", event => {
+self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(name => {
-          if (name !== CACHE_NAME) {
-            return caches.delete(name);
-          }
-        })
-      );
-    })
+    caches.keys().then(keys => 
+      Promise.all(keys.map(key => {
+        if(key !== cacheName) return caches.delete(key);
+      }))
+    )
   );
 });
 
-// جلب الملفات من الكاش أو من الشبكة
-self.addEventListener("fetch", event => {
+self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
-    })
+    caches.match(event.request).then(cached => cached || fetch(event.request))
   );
 });

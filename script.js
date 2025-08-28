@@ -1,13 +1,11 @@
-// ====== عناصر الصوت والتحكم ======
 const audioPlayer = document.getElementById('audioPlayer');
 const searchBox = document.getElementById('searchBox');
 const surahSelect = document.getElementById('surahSelect');
-
 let surahs = [];
 let currentIndex = 0;
 let repeatOne = false;
 
-// ====== تحميل السور من ملف JSON ======
+// تحميل السور
 fetch('surahs.json')
     .then(res => res.json())
     .then(data => {
@@ -16,7 +14,6 @@ fetch('surahs.json')
         loadTrack(0);
     });
 
-// ====== ملء قائمة السور ======
 function populateSelect() {
     surahs.forEach((name, idx) => {
         const option = document.createElement('option');
@@ -26,13 +23,11 @@ function populateSelect() {
     });
 }
 
-// ====== اختيار السورة ======
 surahSelect.addEventListener('change', e => {
     loadTrack(parseInt(e.target.value));
     playAudio();
 });
 
-// ====== البحث في السور ======
 searchBox.addEventListener('input', () => {
     const filter = searchBox.value.trim();
     surahSelect.innerHTML = '';
@@ -46,19 +41,16 @@ searchBox.addEventListener('input', () => {
     });
 });
 
-// ====== مسار الصوتيات ======
 function audioSrc(idx) {
     return `audio/${String(idx+1).padStart(3,'0')}.mp3`;
 }
 
-// ====== تحميل السورة الحالية ======
 function loadTrack(idx) {
     currentIndex = idx;
     audioPlayer.src = audioSrc(currentIndex);
     surahSelect.value = currentIndex;
 }
 
-// ====== تشغيل / إيقاف الصوت ======
 function playAudio() {
     audioPlayer.play();
     document.getElementById('playPauseBtn').textContent = '⏸️ إيقاف';
@@ -74,7 +66,6 @@ document.getElementById('playPauseBtn').addEventListener('click', () => {
     else pauseAudio();
 });
 
-// ====== أزرار التالي / السابق / التكرار ======
 document.getElementById('nextBtn').addEventListener('click', () => {
     currentIndex = (currentIndex + 1) % surahs.length;
     loadTrack(currentIndex);
@@ -97,7 +88,6 @@ audioPlayer.addEventListener('ended', () => {
     else document.getElementById('nextBtn').click();
 });
 
-// ====== تحديث الوقت ======
 audioPlayer.addEventListener('timeupdate', () => {
     document.getElementById('currentTime').textContent = formatTime(audioPlayer.currentTime);
     document.getElementById('duration').textContent = formatTime(audioPlayer.duration);
@@ -110,9 +100,11 @@ function formatTime(t) {
     return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 }
 
-// ====== شريط الأدعية ======
+// -------------------------
+// الأدعية العلوية
+// -------------------------
 const azkar = [
-    "اللهم بك أصبحنا وبك أمسينا", "سبحان الله والحمد لله", "استغفر الله",
+    "اللهم بك أصبحنا وبك أمسينا", "سبحان الله والحمد لله", "استغفر الله", 
     "اللهم اجعلنا من الذين يستمعون القول فيتبعون أحسنه",
     "اللهم اغفر لنا ولآبائنا وأمهاتنا وأزواجنا وذرياتنا",
     "اللهم صل على سيدنا محمد وعلى آله وصحبه وسلم",
@@ -151,7 +143,7 @@ const azkar = [
     "اللهم اجعلنا من الذين يحبون الصدقة",
     "اللهم اجعلنا من الذين يذكرونك عند كل عمل نقوم به",
     "اللهم اجعلنا من الذين يحافظون على الصلاة في وقتها",
-    "اللهم اجعلنا من الذين يدعون الله لأخوتهم المسلمين",
+    "اللهم ادعوا لأخوتهم المسلمين",
     "اللهم اجعلنا من الذين يحافظون على الأذكار والأدعية",
     "اللهم اجعلنا من الذين يحبون الصالحين",
     "اللهم اجعلنا من الذين يبتغون وجهك الكريم",
@@ -162,37 +154,49 @@ const azkar = [
     "اللهم اجعلنا من الذين يفرحون لما يرضيك يا رب"
 ];
 
-const scrollTextEl = document.getElementById("scrollText");
-scrollTextEl.textContent = azkar.join(" | ");
+document.getElementById("scrollText").textContent = azkar.join(" | ");
 
-// ====== شريط مواعيد الصلاة ======
-const bottomBarEl = document.createElement('div');
-bottomBarEl.className = 'bottom-bar';
-bottomBarEl.innerHTML = '<div class="scroll-text" id="prayerTimesText">جاري تحميل مواعيد الصلاة...</div>';
-document.body.appendChild(bottomBarEl);
-
-const prayerTimesTextEl = document.getElementById('prayerTimesText');
-
-async function updatePrayerTimes() {
-    try {
-        const response = await fetch('https://api.aladhan.com/v1/timingsByCity?city=Cairo&country=Egypt&method=5');
-        const data = await response.json();
-        const timings = data.data.timings;
-        const prayers = [
-            `الفجر: ${timings.Fajr}`,
-            `الشروق: ${timings.Sunrise}`,
-            `الظهر: ${timings.Dhuhr}`,
-            `العصر: ${timings.Asr}`,
-            `المغرب: ${timings.Maghrib}`,
-            `العشاء: ${timings.Isha}`
-        ];
-        prayerTimesTextEl.textContent = prayers.join(' | ');
-    } catch (err) {
-        prayerTimesTextEl.textContent = 'تعذر تحميل مواعيد الصلاة';
-        console.error(err);
-    }
+// -------------------------
+// مواقيت الصلاة (توقيت القاهرة، 12 ساعة)
+// -------------------------
+function updatePrayerTimes() {
+    const times = {
+        Fajr: "05:00 AM",
+        Dhuhr: "12:15 PM",
+        Asr: "03:45 PM",
+        Maghrib: "06:10 PM",
+        Isha: "07:30 PM"
+    };
+    const prayerText = Object.entries(times).map(([name, time]) => `${name}: ${time}`).join(" | ");
+    document.getElementById("prayerTimes").textContent = prayerText;
 }
-
-// تحديث مواعيد الصلاة عند التحميل وكل ساعة
 updatePrayerTimes();
-setInterval(updatePrayerTimes, 60 * 60 * 1000);
+
+// -------------------------
+// التاريخ والوقت (ميلادي + هجري + ساعة 12)
+// -------------------------
+function updateDateTime() {
+    const now = new Date();
+    // تحويل للتوقيت المحلي القاهرة
+    const options = { timeZone: "Africa/Cairo" };
+    const cairoTime = new Date(now.toLocaleString("en-US", options));
+    
+    // الميلادي
+    const day = String(cairoTime.getDate()).padStart(2, '0');
+    const month = String(cairoTime.getMonth()+1).padStart(2,'0');
+    const year = cairoTime.getFullYear();
+
+    // الوقت 12 ساعة
+    let hours = cairoTime.getHours();
+    const minutes = String(cairoTime.getMinutes()).padStart(2,'0');
+    const seconds = String(cairoTime.getSeconds()).padStart(2,'0');
+    const ampm = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12 || 12;
+
+    // هجري (تقريبًا)
+    const hijri = new Intl.DateTimeFormat('ar-TN-u-ca-islamic', { day: 'numeric', month: 'long', year: 'numeric' }).format(cairoTime);
+
+    document.getElementById("dateTime").textContent = `التاريخ الميلادي: ${day}/${month}/${year} | التاريخ الهجري: ${hijri} | الساعة: ${hours}:${minutes}:${seconds} ${ampm}`;
+}
+setInterval(updateDateTime, 1000);
+updateDateTime();
