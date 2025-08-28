@@ -23,9 +23,7 @@ const azkar = [
   "اللهم اجعلنا من الذين يحبون الصدقة",
   "اللهم اجعلنا من الذين يفرحون لما يرضيك يا رب"
 ];
-
-const scrollTextEl = document.getElementById("scrollText");
-scrollTextEl.textContent = azkar.join(" | ");
+document.getElementById("scrollText").textContent = azkar.join(" | ");
 
 // ====== شريط مواعيد الصلاة ======
 const prayerTimesEl = document.getElementById("prayerTimes");
@@ -40,18 +38,21 @@ function updateDateTime() {
   const now = new Date();
   const options = { timeZone: 'Africa/Cairo', hour12: true, hour: '2-digit', minute:'2-digit', second:'2-digit' };
   const time = now.toLocaleTimeString('ar-EG', options);
-
   const dateOptions = { timeZone: 'Africa/Cairo', year: 'numeric', month: 'long', day: 'numeric' };
   const date = now.toLocaleDateString('ar-EG', dateOptions);
-
   const hijri = new Intl.DateTimeFormat('ar-EG-u-ca-islamic', {day:'numeric', month:'long', year:'numeric'}).format(now);
-
   document.getElementById("dateTime").textContent = `${date} | ${hijri} | ${time}`;
 }
 setInterval(updateDateTime, 1000);
 updateDateTime();
 
-// ====== مشغل الصوتيات ======
+// ====== القائمة الجانبية ======
+function toggleMenu() {
+  const menu = document.getElementById('menuList');
+  menu.classList.toggle('show');
+}
+
+// ====== كود مشغل الصوت ======
 const audioPlayer = document.getElementById('audioPlayer');
 const searchBox = document.getElementById('searchBox');
 const surahSelect = document.getElementById('surahSelect');
@@ -60,16 +61,24 @@ let currentIndex = 0;
 let repeatOne = false;
 
 // روابط السور من archive.org
-const surahLinks = [];
-for(let i=1;i<=114;i++){
-    surahLinks.push(`https://archive.org/download/002_20250826_202508/${String(i).padStart(3,'0')}.mp3`);
-}
+const surahLinks = [
+  "https://archive.org/download/002_20250826_202508/001.mp3",
+  "https://archive.org/download/002_20250826_202508/002.mp3",
+  "https://archive.org/download/002_20250826_202508/003.mp3",
+  "https://archive.org/download/002_20250826_202508/004.mp3",
+  "https://archive.org/download/002_20250826_202508/005.mp3",
+  "https://archive.org/download/002_20250826_202508/006.mp3",
+  "https://archive.org/download/002_20250826_202508/007.mp3",
+  "https://archive.org/download/002_20250826_202508/008.mp3",
+  "https://archive.org/download/002_20250826_202508/009.mp3",
+  "https://archive.org/download/002_20250826_202508/010.mp3"
+  // أكمل باقي السور بنفس الطريقة
+];
 
-// تحميل السور
 fetch('surahs.json')
     .then(res => res.json())
     .then(data => {
-        surahs = data.surahs;
+        surahs = data.surs;
         populateSelect();
         loadTrack(0);
     });
@@ -88,91 +97,4 @@ surahSelect.addEventListener('change', e => {
     playAudio();
 });
 
-searchBox.addEventListener('input', () => {
-    const filter = searchBox.value.trim();
-    surahSelect.innerHTML = '';
-    surahs.forEach((name, idx) => {
-        if(name.includes(filter) || filter === '') {
-            const option = document.createElement('option');
-            option.value = idx;
-            option.textContent = `${String(idx+1).padStart(3,'0')} - ${name}`;
-            surahSelect.appendChild(option);
-        }
-    });
-});
-
-function audioSrc(idx) {
-    return surahLinks[idx];
-}
-
-function loadTrack(idx) {
-    currentIndex = idx;
-    audioPlayer.src = audioSrc(currentIndex);
-    audioPlayer.load(); // ⬅ تحميل سريع
-    surahSelect.value = currentIndex;
-}
-
-function playAudio() {
-    audioPlayer.play();
-    document.getElementById('playPauseBtn').textContent = '⏸️ إيقاف';
-}
-
-function pauseAudio() {
-    audioPlayer.pause();
-    document.getElementById('playPauseBtn').textContent = '▶️ تشغيل';
-}
-
-document.getElementById('playPauseBtn').addEventListener('click', () => {
-    if(audioPlayer.paused) playAudio();
-    else pauseAudio();
-});
-
-document.getElementById('nextBtn').addEventListener('click', () => {
-    currentIndex = (currentIndex + 1) % surahs.length;
-    loadTrack(currentIndex);
-    playAudio();
-});
-
-document.getElementById('prevBtn').addEventListener('click', () => {
-    currentIndex = (currentIndex - 1 + surahs.length) % surahs.length;
-    loadTrack(currentIndex);
-    playAudio();
-});
-
-document.getElementById('repeatBtn').addEventListener('click', () => {
-    repeatOne = !repeatOne;
-    document.getElementById('repeatBtn').style.backgroundColor = repeatOne ? '#23a391' : '';
-});
-
-audioPlayer.addEventListener('ended', () => {
-    if(repeatOne) playAudio();
-    else document.getElementById('nextBtn').click();
-});
-
-audioPlayer.addEventListener('timeupdate', () => {
-    document.getElementById('currentTime').textContent = formatTime(audioPlayer.currentTime);
-    document.getElementById('duration').textContent = formatTime(audioPlayer.duration);
-});
-
-function formatTime(t) {
-    if(isNaN(t)) return '00:00';
-    const m = Math.floor(t/60);
-    const s = Math.floor(t%60);
-    return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-}
-
-// ====== القائمة الجانبية ======
-const sideMenu = document.getElementById('sideMenu');
-const menuToggle = document.getElementById('menuToggle');
-
-menuToggle.addEventListener('click', () => {
-    sideMenu.classList.toggle('open');
-});
-
-const menuLinks = document.querySelectorAll('#sideMenu a');
-menuLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        // تبقى القائمة مفتوحة حتى بعد الانتقال
-        sideMenu.classList.add('open');
-    });
-});
+search
