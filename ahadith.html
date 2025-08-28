@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الأحاديث النبوية</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="https://surahquran.com/img/blog/quran.png">
+</head>
+<body>
+
+<!-- شريط الأدعية -->
+<div class="top-bar">
+  <div class="scroll-text" id="scrollText"></div>
+</div>
+
+<!-- شريط مواعيد الصلاة -->
+<div class="prayer-bar">
+  <div class="scroll-text" id="prayerTimes"></div>
+</div>
+
+<!-- شريط التاريخ والوقت -->
+<div class="date-time-bar">
+  <div id="dateTime"></div>
+</div>
+
+<!-- القائمة الجانبية -->
+<div class="sidebar">
+  <button class="menu-toggle">☰</button>
+  <ul class="menu">
+    <li><a href="index.html">الصفحة الرئيسية</a></li>
+    <li><a href="adhkar.html">أذكار الصباح والمساء</a></li>
+    <li><a href="ruqyah.html">الرقية الشرعية</a></li>
+    <li><a href="duaa_dead.html">دعاء المتوفي</a></li>
+    <li><a href="ahadith.html">الأحاديث النبوية</a></li>
+  </ul>
+</div>
+
+<header>
+  <img src="https://surahquran.com/img/blog/quran.png" alt="القرآن الكريم" class="logo">
+  <h1>الأحاديث النبوية</h1>
+</header>
+
+<main>
+  <ul id="ahadith-list"></ul>
+</main>
+
+<footer>
+  <p>صدقة جارية عن جميع المسلمين<br>داعين الله أن يتقبلها منا جميعاً</p>
+  <p class="dev">المطور: فاعل خير</p>
+</footer>
+
+<script src="script.js"></script>
+<script>
+// ====== الأحاديث النبوية ======
+const ahadith = [
+  "حديث 1", "حديث 2", "حديث 3"
+  // أضف باقي الأحاديث هنا أو اربطها من ملف خارجي
+];
+const ahadithListEl = document.getElementById('ahadith-list');
+ahadith.forEach(h => {
+  const li = document.createElement('li');
+  li.textContent = h;
+  ahadithListEl.appendChild(li);
+});
+</script>
+</body>
+</html>

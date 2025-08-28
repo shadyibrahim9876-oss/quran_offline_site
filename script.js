@@ -159,3 +159,27 @@ function formatTime(t) {
     const s = Math.floor(t%60);
     return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 }
+
+// ====== التحكم في القائمة الجانبية ======
+const sidebar = document.getElementById('sidebar');
+const hamburger = document.getElementById('hamburger');
+
+hamburger.addEventListener('click', () => {
+  sidebar.classList.toggle('open');
+});
+
+// ====== تحميل المحتوى من ملفات JSON ======
+function loadSectionContent(jsonFile, containerId, keyName) {
+    fetch(jsonFile)
+        .then(res => res.json())
+        .then(data => {
+            const container = document.getElementById(containerId);
+            container.innerHTML = "";
+            data[keyName].forEach(item => {
+                const p = document.createElement("p");
+                p.textContent = item;
+                container.appendChild(p);
+            });
+        })
+        .catch(err => console.error("Error loading JSON:", err));
+}

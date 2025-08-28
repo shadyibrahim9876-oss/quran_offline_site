@@ -1,46 +1,50 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #023c36; /* الخلفية الخضراء */
+/* ======= القائمة الجانبية ======= */
+.hamburger {
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  font-size: 28px;
+  cursor: pointer;
+  z-index: 1001;
+  background: #023c36;
   color: #fff;
+  padding: 8px 12px;
+  border-radius: 5px;
 }
 
-/* شريط الأدعية العلوي */
-.top-bar, .prayer-bar {
-  width: 100%;
-  overflow: hidden;
-  white-space: nowrap;
-  box-sizing: border-box;
-  padding: 5px 0;
-  font-size: 14px;
-  background-color: #014d40;
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: #023c36;
+  overflow-x: hidden;
+  transition: 0.4s;
+  padding-top: 60px;
+  z-index: 1000;
 }
 
-.date-time-bar {
-  width: 100%;
-  text-align: center;
-  font-size: 14px;
-  padding: 5px 0;
-  background-color: #016655;
+.sidebar a {
+  display: block;
+  padding: 15px 30px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #fff;
+  transition: 0.3s;
 }
 
-/* حركة النص */
-.scroll-text {
-  display: inline-block;
-  padding-left: 100%;
-  animation: scroll-left 200s linear infinite; /* سرعة بطيئة جدا */
+.sidebar a:hover {
+  background-color: #02675b;
 }
 
-@keyframes scroll-left {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-100%); }
+/* عند فتح القائمة */
+.sidebar.open {
+  width: 250px;
 }
 
-header, main, footer {
-  text-align: center;
-}
-
-footer {
-  margin-top: 20px;
-  font-size: 16px;
+/* ضبط الشريط العلوي والخلفية */
+.top-bar, .prayer-bar, .date-time-bar {
+  background-color: #023c36;
+  color: #fff;
 }
