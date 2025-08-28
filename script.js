@@ -24,7 +24,8 @@ const azkar = [
   "اللهم اجعلنا من الذين يفرحون لما يرضيك يا رب"
 ];
 
-document.getElementById("scrollText").textContent = azkar.join(" | ");
+const scrollTextEl = document.getElementById("scrollText");
+scrollTextEl.textContent = azkar.join(" | ");
 
 // ====== شريط مواعيد الصلاة (تحديث تلقائي) ======
 const prayerTimesEl = document.getElementById("prayerTimes");
@@ -45,7 +46,6 @@ function updateDateTime() {
   const dateOptions = { timeZone: 'Africa/Cairo', year: 'numeric', month: 'long', day: 'numeric' };
   const date = now.toLocaleDateString('ar-EG', dateOptions);
 
-  // التاريخ الهجري (تقريبي)
   const hijri = new Intl.DateTimeFormat('ar-EG-u-ca-islamic', {day:'numeric', month:'long', year:'numeric'}).format(now);
 
   document.getElementById("dateTime").textContent = `${date} | ${hijri} | ${time}`;
@@ -61,7 +61,21 @@ let surahs = [];
 let currentIndex = 0;
 let repeatOne = false;
 
-// تحميل السور
+// روابط السور من archive.org
+const surahLinks = [
+  "https://archive.org/download/002_20250826_202508/001.mp3",
+  "https://archive.org/download/002_20250826_202508/002.mp3",
+  "https://archive.org/download/002_20250826_202508/003.mp3",
+  "https://archive.org/download/002_20250826_202508/004.mp3",
+  "https://archive.org/download/002_20250826_202508/005.mp3",
+  "https://archive.org/download/002_20250826_202508/006.mp3",
+  "https://archive.org/download/002_20250826_202508/007.mp3",
+  "https://archive.org/download/002_20250826_202508/008.mp3",
+  "https://archive.org/download/002_20250826_202508/009.mp3",
+  "https://archive.org/download/002_20250826_202508/010.mp3",
+  // أكمل باقي السور بنفس الطريقة حتى آخر سورة
+];
+
 fetch('surahs.json')
     .then(res => res.json())
     .then(data => {
@@ -98,7 +112,7 @@ searchBox.addEventListener('input', () => {
 });
 
 function audioSrc(idx) {
-    return `audio/${String(idx+1).padStart(3,'0')}.mp3`;
+    return surahLinks[idx]; // استخدم روابط archive.org مباشرة
 }
 
 function loadTrack(idx) {
