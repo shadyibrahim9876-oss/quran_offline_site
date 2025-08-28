@@ -38,8 +38,6 @@ prayerTimesEl.textContent = prayerTimes.join(" | ");
 // ====== التاريخ والوقت ======
 function updateDateTime() {
   const now = new Date();
-
-  // التوقيت المحلي للقاهرة
   const options = { timeZone: 'Africa/Cairo', hour12: true, hour: '2-digit', minute:'2-digit', second:'2-digit' };
   const time = now.toLocaleTimeString('ar-EG', options);
 
@@ -61,20 +59,12 @@ let surahs = [];
 let currentIndex = 0;
 let repeatOne = false;
 
-// روابط السور من archive.org
-const surahLinks = [
-  "https://archive.org/download/002_20250826_202508/001.mp3",
-  "https://archive.org/download/002_20250826_202508/002.mp3",
-  "https://archive.org/download/002_20250826_202508/003.mp3",
-  "https://archive.org/download/002_20250826_202508/004.mp3",
-  "https://archive.org/download/002_20250826_202508/005.mp3",
-  "https://archive.org/download/002_20250826_202508/006.mp3",
-  "https://archive.org/download/002_20250826_202508/007.mp3",
-  "https://archive.org/download/002_20250826_202508/008.mp3",
-  "https://archive.org/download/002_20250826_202508/009.mp3",
-  "https://archive.org/download/002_20250826_202508/010.mp3",
-  // أكمل باقي السور بنفس الطريقة حتى آخر سورة
-];
+// روابط السور من archive.org لكل 114 سورة
+const surahLinks = [];
+for(let i=1; i<=114; i++){
+    const num = String(i).padStart(3,'0');
+    surahLinks.push(`https://archive.org/download/002_20250826_202508/${num}.mp3`);
+}
 
 fetch('surahs.json')
     .then(res => res.json())
@@ -112,7 +102,7 @@ searchBox.addEventListener('input', () => {
 });
 
 function audioSrc(idx) {
-    return surahLinks[idx]; // استخدم روابط archive.org مباشرة
+    return surahLinks[idx];
 }
 
 function loadTrack(idx) {
