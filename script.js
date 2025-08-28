@@ -41,8 +41,10 @@ searchBox.addEventListener('input', () => {
     });
 });
 
+// تعديل هنا: تشغيل الصوت مباشرة من Archive.org
 function audioSrc(idx) {
-    return `audio/${String(idx+1).padStart(3,'0')}.mp3`;
+    const baseURL = "https://archive.org/download/002_20250826_202508/";
+    return `${baseURL}${String(idx+1).padStart(3,'0')}.mp3`;
 }
 
 function loadTrack(idx) {
