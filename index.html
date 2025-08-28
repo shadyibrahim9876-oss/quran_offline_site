@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>القرآن الكريم - الشيخ عبد الباسط عبد الصمد (مجود)</title>
-<link rel="stylesheet" href="style.css">
-<link rel="icon" href="icon-192.png">
+<link rel="stylesheet" href="style.css?v=1.0">
+<link rel="icon" href="https://surahquran.com/img/blog/quran.png">
 
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DF7YR27LJC"></script>
@@ -29,12 +29,12 @@
 <body>
 
 <!-- القائمة الجانبية -->
-<div class="side-menu" id="sideMenu">
-  <button class="menu-toggle" id="menuToggle">☰</button>
-  <ul>
+<div id="sideMenu">
+  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  <ul id="menuItems">
     <li><a href="adhkar.html">أذكار الصباح والمساء</a></li>
-    <li><a href="index.html">الصفحة الرئيسية قرآن كريم</a></li>
-    <li><a href="ruqyah.html">الرقية الشرعية</a></li>
+    <li><a href="index.html">الصفحة الرئيسية - قرآن كريم</a></li>
+    <li><a href="ruqyah.html">الرُقية الشرعية</a></li>
     <li><a href="duaa_dead.html">دعاء المتوفي</a></li>
     <li><a href="ahadith.html">أحاديث نبوية</a></li>
   </ul>
@@ -56,7 +56,7 @@
 </div>
 
 <header>
-  <img src="icon-192.png" alt="القرآن الكريم" class="logo">
+  <img src="https://surahquran.com/img/blog/quran.png" alt="القرآن الكريم" class="logo">
   <h1>مرحباً بكم في موقع القرآن الكريم</h1>
   <h2 class="bismillah">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</h2>
   <h3>الشيخ عبد الباسط عبد الصمد (مجود)</h3>
@@ -87,6 +87,6 @@
 </footer>
 
 <audio id="audioPlayer"></audio>
-<script src="script.js"></script>
+<script src="script.js?v=1.0"></script>
 </body>
 </html>
