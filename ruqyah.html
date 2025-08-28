@@ -3,13 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>الرقية الشرعية</title>
+<title>الرُقية الشرعية</title>
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="https://surahquran.com/img/blog/quran.png">
+
+<!-- Manifest & PWA -->
+<link rel="manifest" href="manifest.json">
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(() => console.log('Service Worker Registered'))
+      .catch(err => console.log('SW registration failed:', err));
+  }
+</script>
 </head>
 <body>
 
-<!-- شريط الأدعية -->
+<!-- شريط الأدعية العلوي -->
 <div class="top-bar">
   <div class="scroll-text" id="scrollText"></div>
 </div>
@@ -24,21 +34,8 @@
   <div id="dateTime"></div>
 </div>
 
-<!-- القائمة الجانبية -->
-<div class="sidebar">
-  <button class="menu-toggle">☰</button>
-  <ul class="menu">
-    <li><a href="index.html">الصفحة الرئيسية</a></li>
-    <li><a href="adhkar.html">أذكار الصباح والمساء</a></li>
-    <li><a href="ruqyah.html">الرقية الشرعية</a></li>
-    <li><a href="duaa_dead.html">دعاء المتوفي</a></li>
-    <li><a href="ahadith.html">الأحاديث النبوية</a></li>
-  </ul>
-</div>
-
 <header>
-  <img src="https://surahquran.com/img/blog/quran.png" alt="القرآن الكريم" class="logo">
-  <h1>الرقية الشرعية</h1>
+  <h1>الرُقية الشرعية</h1>
 </header>
 
 <main>
@@ -51,19 +48,5 @@
 </footer>
 
 <script src="script.js"></script>
-<script>
-// ====== الرقية الشرعية ======
-const ruqyah = [
-  "بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء", 
-  "أعوذ بكلمات الله التامات من شر ما خلق"
-  // أضف باقي الرقية هنا
-];
-const ruqyahListEl = document.getElementById('ruqyah-list');
-ruqyah.forEach(r => {
-  const li = document.createElement('li');
-  li.textContent = r;
-  ruqyahListEl.appendChild(li);
-});
-</script>
 </body>
 </html>

@@ -59,12 +59,20 @@ let surahs = [];
 let currentIndex = 0;
 let repeatOne = false;
 
-// روابط السور من archive.org لكل 114 سورة
-const surahLinks = [];
-for(let i=1; i<=114; i++){
-    const num = String(i).padStart(3,'0');
-    surahLinks.push(`https://archive.org/download/002_20250826_202508/${num}.mp3`);
-}
+// روابط السور من archive.org
+const surahLinks = [
+  "https://archive.org/download/002_20250826_202508/001.mp3",
+  "https://archive.org/download/002_20250826_202508/002.mp3",
+  "https://archive.org/download/002_20250826_202508/003.mp3",
+  "https://archive.org/download/002_20250826_202508/004.mp3",
+  "https://archive.org/download/002_20250826_202508/005.mp3",
+  "https://archive.org/download/002_20250826_202508/006.mp3",
+  "https://archive.org/download/002_20250826_202508/007.mp3",
+  "https://archive.org/download/002_20250826_202508/008.mp3",
+  "https://archive.org/download/002_20250826_202508/009.mp3",
+  "https://archive.org/download/002_20250826_202508/010.mp3"
+  // أكمل باقي السور بنفس الطريقة حتى آخر سورة
+];
 
 fetch('surahs.json')
     .then(res => res.json())
@@ -102,7 +110,7 @@ searchBox.addEventListener('input', () => {
 });
 
 function audioSrc(idx) {
-    return surahLinks[idx];
+    return surahLinks[idx]; // استخدم روابط archive.org مباشرة
 }
 
 function loadTrack(idx) {
@@ -160,26 +168,10 @@ function formatTime(t) {
     return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 }
 
-// ====== التحكم في القائمة الجانبية ======
-const sidebar = document.getElementById('sidebar');
-const hamburger = document.getElementById('hamburger');
+// ====== القائمة الجانبية (Navigation) ======
+const menuBtn = document.getElementById("menuBtn");
+const sideMenu = document.getElementById("sideMenu");
 
-hamburger.addEventListener('click', () => {
-  sidebar.classList.toggle('open');
+menuBtn.addEventListener("click", () => {
+    sideMenu.classList.toggle("open");
 });
-
-// ====== تحميل المحتوى من ملفات JSON ======
-function loadSectionContent(jsonFile, containerId, keyName) {
-    fetch(jsonFile)
-        .then(res => res.json())
-        .then(data => {
-            const container = document.getElementById(containerId);
-            container.innerHTML = "";
-            data[keyName].forEach(item => {
-                const p = document.createElement("p");
-                p.textContent = item;
-                container.appendChild(p);
-            });
-        })
-        .catch(err => console.error("Error loading JSON:", err));
-}

@@ -5,9 +5,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>الأحاديث النبوية</title>
 <link rel="stylesheet" href="style.css">
-<link rel="icon" href="https://surahquran.com/img/blog/quran.png">
+<link rel="icon" href="icon-192.png">
+
+<!-- Manifest & PWA -->
+<link rel="manifest" href="manifest.json">
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(() => console.log('Service Worker Registered'))
+      .catch(err => console.log('SW registration failed:', err));
+  }
+</script>
 </head>
 <body>
+
+<!-- القائمة الجانبية -->
+<div class="side-menu">
+  <button id="menuToggle">☰</button>
+  <ul id="sideMenuList" class="hidden">
+    <li><a href="index.html">الصفحة الرئيسية القرآن الكريم</a></li>
+    <li><a href="adhkar.html">أذكار الصباح والمساء</a></li>
+    <li><a href="ruqyah.html">الرقية الشرعية</a></li>
+    <li><a href="duaa_dead.html">دعاء المتوفي</a></li>
+    <li><a href="ahadith.html">أحاديث نبوية</a></li>
+  </ul>
+</div>
 
 <!-- شريط الأدعية -->
 <div class="top-bar">
@@ -24,25 +46,13 @@
   <div id="dateTime"></div>
 </div>
 
-<!-- القائمة الجانبية -->
-<div class="sidebar">
-  <button class="menu-toggle">☰</button>
-  <ul class="menu">
-    <li><a href="index.html">الصفحة الرئيسية</a></li>
-    <li><a href="adhkar.html">أذكار الصباح والمساء</a></li>
-    <li><a href="ruqyah.html">الرقية الشرعية</a></li>
-    <li><a href="duaa_dead.html">دعاء المتوفي</a></li>
-    <li><a href="ahadith.html">الأحاديث النبوية</a></li>
-  </ul>
-</div>
-
 <header>
-  <img src="https://surahquran.com/img/blog/quran.png" alt="القرآن الكريم" class="logo">
   <h1>الأحاديث النبوية</h1>
+  <p>مستقل لكل صفحة، بخط جميل وزخارف بسيطة</p>
 </header>
 
 <main>
-  <ul id="ahadith-list"></ul>
+  <ul id="hadithList"></ul>
 </main>
 
 <footer>
@@ -52,17 +62,24 @@
 
 <script src="script.js"></script>
 <script>
-// ====== الأحاديث النبوية ======
-const ahadith = [
-  "حديث 1", "حديث 2", "حديث 3"
-  // أضف باقي الأحاديث هنا أو اربطها من ملف خارجي
-];
-const ahadithListEl = document.getElementById('ahadith-list');
-ahadith.forEach(h => {
-  const li = document.createElement('li');
-  li.textContent = h;
-  ahadithListEl.appendChild(li);
-});
+  // تحميل الأحاديث من JSON
+  fetch('ahadith.json')
+    .then(res => res.json())
+    .then(data => {
+      const list = document.getElementById('hadithList');
+      data.ahadith.forEach((hadith, idx) => {
+        const li = document.createElement('li');
+        li.textContent = hadith;
+        list.appendChild(li);
+      });
+    });
+
+  // تفعيل القائمة الجانبية
+  const menuToggle = document.getElementById('menuToggle');
+  const sideMenuList = document.getElementById('sideMenuList');
+  menuToggle.addEventListener('click', () => {
+    sideMenuList.classList.toggle('hidden');
+  });
 </script>
 </body>
 </html>

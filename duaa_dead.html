@@ -3,11 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>دعاء المتوفي</title>
+<title>دعاء المتوفي - موقع القرآن الكريم</title>
 <link rel="stylesheet" href="style.css">
-<link rel="icon" href="https://surahquran.com/img/blog/quran.png">
+<link rel="icon" href="icon-192.png">
+
+<!-- Manifest & PWA -->
+<link rel="manifest" href="manifest.json">
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(() => console.log('Service Worker Registered'))
+      .catch(err => console.log('SW registration failed:', err));
+  }
+</script>
 </head>
 <body>
+
+<!-- القائمة الجانبية -->
+<div class="side-menu" id="sideMenu">
+  <button class="menu-btn" onclick="toggleMenu()">☰</button>
+  <ul>
+    <li><a href="adhkar.html">أذكار الصباح والمساء</a></li>
+    <li><a href="index.html">الصفحة الرئيسية - قرآن كريم</a></li>
+    <li><a href="ruqyah.html">الرقية الشرعية</a></li>
+    <li><a href="duaa_dead.html">دعاء المتوفي</a></li>
+    <li><a href="ahadith.html">أحاديث نبوية</a></li>
+  </ul>
+</div>
 
 <!-- شريط الأدعية -->
 <div class="top-bar">
@@ -24,25 +46,13 @@
   <div id="dateTime"></div>
 </div>
 
-<!-- القائمة الجانبية -->
-<div class="sidebar">
-  <button class="menu-toggle">☰</button>
-  <ul class="menu">
-    <li><a href="index.html">الصفحة الرئيسية</a></li>
-    <li><a href="adhkar.html">أذكار الصباح والمساء</a></li>
-    <li><a href="ruqyah.html">الرقية الشرعية</a></li>
-    <li><a href="duaa_dead.html">دعاء المتوفي</a></li>
-    <li><a href="ahadith.html">الأحاديث النبوية</a></li>
-  </ul>
-</div>
-
-<header>
-  <img src="https://surahquran.com/img/blog/quran.png" alt="القرآن الكريم" class="logo">
-  <h1>دعاء المتوفي</h1>
-</header>
-
 <main>
-  <ul id="duaa-list"></ul>
+  <header>
+    <h1>دعاء المتوفي</h1>
+    <p>أدعية للميت ورفع الدعاء له</p>
+  </header>
+
+  <div id="duaaContent"></div>
 </main>
 
 <footer>
@@ -52,18 +62,17 @@
 
 <script src="script.js"></script>
 <script>
-// ====== دعاء المتوفي ======
-const duaaDead = [
-  "اللهم اغفر له وارحمه", 
-  "اللهم اجعل قبره روضة من رياض الجنة"
-  // أضف باقي الأدعية هنا
-];
-const duaaListEl = document.getElementById('duaa-list');
-duaaDead.forEach(d => {
-  const li = document.createElement('li');
-  li.textContent = d;
-  duaaListEl.appendChild(li);
-});
+  // تحميل دعاء المتوفي من duaa_dead.json
+  fetch('duaa_dead.json')
+    .then(res => res.json())
+    .then(data => {
+      const container = document.getElementById('duaaContent');
+      data.duaa.forEach((item, idx) => {
+        const p = document.createElement('p');
+        p.textContent = item;
+        container.appendChild(p);
+      });
+    });
 </script>
 </body>
 </html>

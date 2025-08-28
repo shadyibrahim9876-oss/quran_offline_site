@@ -1,50 +1,161 @@
-/* ======= القائمة الجانبية ======= */
-.hamburger {
-  position: fixed;
-  top: 10px;
-  right: 20px;
-  font-size: 28px;
-  cursor: pointer;
-  z-index: 1001;
-  background: #023c36;
+/* ====== الخطوط ====== */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #e6f2e6; /* الخلفية الخضراء السابقة */
+  color: #000;
+  direction: rtl; /* الكتابة من اليمين لليسار */
+}
+
+/* ====== الشريط العلوي للأدعية ====== */
+.top-bar, .prayer-bar, .date-time-bar {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  box-sizing: border-box;
+  padding: 5px 0;
+  background-color: #23a391;
   color: #fff;
-  padding: 8px 12px;
+}
+
+.scroll-text {
+  display: inline-block;
+  padding-left: 100%;
+  animation: scroll-left 60s linear infinite;
+}
+
+/* ====== حركة التمرير ====== */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* ====== شريط التاريخ والوقت ====== */
+.date-time-bar {
+  background-color: #1f6f61;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* ====== الهيدر ====== */
+header {
+  text-align: center;
+  padding: 20px 10px;
+}
+
+.logo {
+  max-width: 80px;
+}
+
+.bismillah {
+  color: #23a391;
+  font-size: 1.5em;
+}
+
+/* ====== الصفحة الرئيسية - قائمة التحكم ====== */
+.controls {
+  text-align: center;
+  margin: 10px 0;
+}
+
+#searchBox {
+  padding: 5px;
+  width: 60%;
+  margin-bottom: 10px;
+}
+
+#surahSelect {
+  padding: 5px;
+  width: 65%;
+}
+
+/* ====== مشغل الصوت ====== */
+.player {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px 0;
+  gap: 10px;
+}
+
+.player button {
+  font-size: 1.2em;
+  padding: 5px 10px;
+  cursor: pointer;
+  background-color: #23a391;
+  color: white;
+  border: none;
   border-radius: 5px;
 }
 
-.sidebar {
-  height: 100%;
-  width: 0;
+.time {
+  font-weight: bold;
+}
+
+/* ====== الفوتر ====== */
+footer {
+  text-align: center;
+  padding: 15px 10px;
+  background-color: #1f6f61;
+  color: #fff;
+}
+
+footer .dev {
+  font-size: 0.9em;
+  color: #ccc;
+}
+
+/* ====== القائمة الجانبية ====== */
+.side-menu {
   position: fixed;
-  top: 0;
+  top: 10px;
   right: 0;
-  background-color: #023c36;
-  overflow-x: hidden;
-  transition: 0.4s;
-  padding-top: 60px;
+  background-color: #23a391;
+  width: 220px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 10px;
+  border-radius: 8px 0 0 8px;
   z-index: 1000;
 }
 
-.sidebar a {
-  display: block;
-  padding: 15px 30px;
+.side-menu h3 {
+  margin-top: 0;
+  color: white;
+  cursor: pointer;
+}
+
+.side-menu ul {
+  list-style: none;
+  padding-left: 0;
+  display: none;
+}
+
+.side-menu ul li {
+  margin: 5px 0;
+}
+
+.side-menu ul li a {
+  color: #fff;
   text-decoration: none;
-  font-size: 18px;
-  color: #fff;
-  transition: 0.3s;
 }
 
-.sidebar a:hover {
-  background-color: #02675b;
+/* عند التوسيع */
+.side-menu ul.show {
+  display: block;
 }
 
-/* عند فتح القائمة */
-.sidebar.open {
-  width: 250px;
+/* ====== صفحات فرعية زخرفية ====== */
+.page-content {
+  padding: 15px;
+  line-height: 1.8;
+  text-align: justify;
 }
-
-/* ضبط الشريط العلوي والخلفية */
-.top-bar, .prayer-bar, .date-time-bar {
-  background-color: #023c36;
-  color: #fff;
+.page-content p {
+  margin: 10px 0;
+  text-indent: 1em;
 }

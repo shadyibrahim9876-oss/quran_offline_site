@@ -5,7 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>أذكار الصباح والمساء</title>
 <link rel="stylesheet" href="style.css">
-<link rel="icon" href="https://surahquran.com/img/blog/quran.png">
+<link rel="icon" href="icon-192.png">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DF7YR27LJC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DF7YR27LJC');
+</script>
+
+<link rel="manifest" href="manifest.json">
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(() => console.log('Service Worker Registered'))
+      .catch(err => console.log('SW registration failed:', err));
+  }
+</script>
 </head>
 <body>
 
@@ -25,24 +43,23 @@
 </div>
 
 <!-- القائمة الجانبية -->
-<div class="sidebar">
-  <button class="menu-toggle">☰</button>
-  <ul class="menu">
+<div class="sidebar" id="sidebar">
+  <div class="menu-toggle" id="menuToggle">☰</div>
+  <ul>
     <li><a href="index.html">الصفحة الرئيسية</a></li>
     <li><a href="adhkar.html">أذكار الصباح والمساء</a></li>
     <li><a href="ruqyah.html">الرقية الشرعية</a></li>
     <li><a href="duaa_dead.html">دعاء المتوفي</a></li>
-    <li><a href="ahadith.html">الأحاديث النبوية</a></li>
+    <li><a href="ahadith.html">أحاديث نبوية</a></li>
   </ul>
 </div>
 
 <header>
-  <img src="https://surahquran.com/img/blog/quran.png" alt="القرآن الكريم" class="logo">
   <h1>أذكار الصباح والمساء</h1>
 </header>
 
 <main>
-  <ul id="adhkar-list"></ul>
+  <ul id="adhkarList"></ul>
 </main>
 
 <footer>
@@ -52,18 +69,17 @@
 
 <script src="script.js"></script>
 <script>
-// ====== أذكار الصباح والمساء ======
-const adhkar = [
-  "أصبحنا وأمسيْنا على فطرة الإسلام", "اللهم أنت ربي لا إله إلا أنت...",
-  "سبحان الله وبحمده", "أستغفر الله العظيم"
-  // أضف باقي الأذكار هنا
-];
-const adhkarListEl = document.getElementById('adhkar-list');
-adhkar.forEach(a => {
-  const li = document.createElement('li');
-  li.textContent = a;
-  adhkarListEl.appendChild(li);
-});
+  // تحميل الأذكار من ملف JSON
+  fetch('adhkar.json')
+    .then(res => res.json())
+    .then(data => {
+      const list = document.getElementById('adhkarList');
+      data.adhkar.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        list.appendChild(li);
+      });
+    });
 </script>
 </body>
 </html>
