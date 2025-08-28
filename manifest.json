@@ -1,10 +1,11 @@
 {
-  "name": "Quran Offline",
-  "short_name": "Quran",
+  "name": "القرآن الكريم - عبد الباسط عبد الصمد",
+  "short_name": "القرآن الكريم",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0b3b36",
-  "theme_color": "#0b3b36",
+  "theme_color": "#23a391",
+  "description": "استمع إلى القرآن الكريم مع الشيخ عبد الباسط عبد الصمد مجود",
   "icons": [
     {
       "src": "icon-192.png",

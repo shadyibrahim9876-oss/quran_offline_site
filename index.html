@@ -13,11 +13,19 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-DF7YR27LJC');
     </script>
     <!-- End Google Analytics -->
 
+    <!-- Manifest & PWA -->
+    <link rel="manifest" href="manifest.json">
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(() => console.log('Service Worker Registered'))
+          .catch(err => console.log('SW registration failed:', err));
+      }
+    </script>
 </head>
 <body>
     <header>
@@ -29,15 +37,17 @@
 
     <main>
         <div class="controls">
-            <select id="surahSelect"></select>
             <input type="text" id="searchBox" placeholder="ابحث عن اسم السورة">
+            <select id="surahSelect"></select>
         </div>
 
+        <ul id="surah-list"></ul>
+
         <div class="player">
-            <button id="prevBtn">⏮️ السورة السابقة</button>
-            <button id="playPauseBtn">▶️ تشغيل</button>
-            <button id="nextBtn">⏭️ السورة التالية</button>
-            <button id="repeatBtn">🔁 تكرار</button>
+            <button id="prevBtn">⏮️</button>
+            <button id="playPauseBtn">▶️</button>
+            <button id="nextBtn">⏭️</button>
+            <button id="repeatBtn">🔁</button>
             <div class="time">
                 <span id="currentTime">00:00</span> / <span id="duration">00:00</span>
             </div>
