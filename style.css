@@ -1,145 +1,56 @@
-/* أساسي */
 body {
     margin: 0;
-    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
-    background-color: #0b3b36;
-    color: #ffffff;
-    direction: rtl;
-}
-
-header {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: #0b3b36;
+    color: #fff;
     text-align: center;
-    padding: 20px;
-    background: linear-gradient(180deg, #114c44, #0b3b36);
 }
-
-header .logo {
-    width: 100px;
-    height: auto;
+header {
+    padding: 20px;
+}
+.logo {
+    width: 120px;
     margin-bottom: 10px;
 }
-
-h1 {
-    font-size: 24px;
-    margin: 5px 0;
-}
-
 .bismillah {
-    font-size: 28px;
+    font-size: 32px;
     font-weight: bold;
     color: #26d0ba;
-    margin: 5px 0;
+    margin: 10px 0;
 }
-
-h3 {
-    font-size: 18px;
-    font-weight: normal;
-    margin: 5px 0;
-    color: #d7f0ea;
-}
-
-/* الواجهة الرئيسية */
-main {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 0 15px;
-}
-
-/* البحث والقائمة */
 .controls {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-bottom: 10px;
+    margin: 20px 0;
 }
-
-#searchBox, #surahSelect {
-    flex: 1;
-    padding: 8px 10px;
-    border-radius: 6px;
-    border: none;
+input[type="text"], select {
+    padding: 8px;
     font-size: 16px;
+    margin: 5px;
 }
-
-#surah-list {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 20px 0;
-    max-height: 300px;
-    overflow-y: auto;
-    border-radius: 10px;
-    background-color: rgba(255,255,255,0.05);
-}
-
-#surah-list li {
-    padding: 10px 15px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    cursor: pointer;
-}
-
-#surah-list li.active,
-#surah-list li:hover {
-    background-color: rgba(38,208,186,0.3);
-}
-
-/* مشغل الصوت */
-.player {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #103f39;
-    padding: 15px;
-    border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.3);
-}
-
 .player button {
-    background-color: #23a391;
-    color: #002;
+    padding: 10px 14px;
+    margin: 5px;
+    font-size: 16px;
     border: none;
     border-radius: 8px;
-    padding: 10px 16px;
-    margin: 5px;
     cursor: pointer;
-    font-size: 16px;
+    background-color: #23a391;
+    color: #002;
 }
-
-.player button.active {
-    background-color: #26d0ba;
+.player button:hover {
+    background-color: #1b8276;
 }
-
 .time {
     margin-top: 10px;
     font-size: 14px;
-    color: #d7f0ea;
 }
-
-/* التذييل */
 footer {
-    text-align: center;
-    padding: 20px 10px;
+    margin-top: 30px;
+    padding: 15px;
     font-size: 14px;
     color: #d7f0ea;
-    background-color: #0a2e29;
 }
-
-footer .dev {
-    font-size: 12px;
+.dev {
     margin-top: 5px;
-    color: #26d0ba;
-}
-
-/* تمرير القائمة */
-#surah-list::-webkit-scrollbar {
-    width: 8px;
-}
-
-#surah-list::-webkit-scrollbar-thumb {
-    background-color: #26d0ba;
-    border-radius: 4px;
-}
-
-#surah-list::-webkit-scrollbar-track {
-    background-color: rgba(255,255,255,0.02);
+    font-size: 12px;
+    color: #a8e0da;
 }

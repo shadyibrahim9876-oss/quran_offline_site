@@ -6,6 +6,17 @@
     <title>القرآن الكريم - الشيخ عبد الباسط عبد الصمد (مجود)</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="https://surahquran.com/img/blog/quran.png">
+
+    <!-- Google Analytics (ضع هنا كود التتبع لاحقًا) -->
+    <!--
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+    -->
 </head>
 <body>
     <header>
@@ -21,13 +32,11 @@
             <select id="surahSelect"></select>
         </div>
 
-        <ul id="surah-list"></ul>
-
         <div class="player">
-            <button id="prevBtn">⏮️</button>
-            <button id="playPauseBtn">▶️</button>
-            <button id="nextBtn">⏭️</button>
-            <button id="repeatBtn">🔁</button>
+            <button id="prevBtn">⏮️ السورة السابقة</button>
+            <button id="playPauseBtn">▶️ تشغيل</button>
+            <button id="nextBtn">⏭️ السورة التالية</button>
+            <button id="repeatBtn">🔁 تكرار</button>
             <div class="time">
                 <span id="currentTime">00:00</span> / <span id="duration">00:00</span>
             </div>
