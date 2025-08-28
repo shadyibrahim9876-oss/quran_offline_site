@@ -27,7 +27,7 @@ const azkar = [
 const scrollTextEl = document.getElementById("scrollText");
 scrollTextEl.textContent = azkar.join(" | ");
 
-// ====== شريط مواعيد الصلاة (تحديث تلقائي) ======
+// ====== شريط مواعيد الصلاة ======
 const prayerTimesEl = document.getElementById("prayerTimes");
 const prayerTimes = [
   "الفجر: 04:30 AM", "الشروق: 06:00 AM", "الظهر: 12:15 PM",
@@ -51,7 +51,7 @@ function updateDateTime() {
 setInterval(updateDateTime, 1000);
 updateDateTime();
 
-// ====== كود مشغل الصوت ======
+// ====== مشغل الصوتيات ======
 const audioPlayer = document.getElementById('audioPlayer');
 const searchBox = document.getElementById('searchBox');
 const surahSelect = document.getElementById('surahSelect');
@@ -60,20 +60,12 @@ let currentIndex = 0;
 let repeatOne = false;
 
 // روابط السور من archive.org
-const surahLinks = [
-  "https://archive.org/download/002_20250826_202508/001.mp3",
-  "https://archive.org/download/002_20250826_202508/002.mp3",
-  "https://archive.org/download/002_20250826_202508/003.mp3",
-  "https://archive.org/download/002_20250826_202508/004.mp3",
-  "https://archive.org/download/002_20250826_202508/005.mp3",
-  "https://archive.org/download/002_20250826_202508/006.mp3",
-  "https://archive.org/download/002_20250826_202508/007.mp3",
-  "https://archive.org/download/002_20250826_202508/008.mp3",
-  "https://archive.org/download/002_20250826_202508/009.mp3",
-  "https://archive.org/download/002_20250826_202508/010.mp3"
-  // أكمل باقي السور بنفس الطريقة حتى آخر سورة
-];
+const surahLinks = [];
+for(let i=1;i<=114;i++){
+    surahLinks.push(`https://archive.org/download/002_20250826_202508/${String(i).padStart(3,'0')}.mp3`);
+}
 
+// تحميل السور
 fetch('surahs.json')
     .then(res => res.json())
     .then(data => {
@@ -110,12 +102,13 @@ searchBox.addEventListener('input', () => {
 });
 
 function audioSrc(idx) {
-    return surahLinks[idx]; // استخدم روابط archive.org مباشرة
+    return surahLinks[idx];
 }
 
 function loadTrack(idx) {
     currentIndex = idx;
     audioPlayer.src = audioSrc(currentIndex);
+    audioPlayer.load(); // ⬅ تحميل سريع
     surahSelect.value = currentIndex;
 }
 
@@ -168,15 +161,7 @@ function formatTime(t) {
     return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 }
 
-// ====== القائمة الجانبية (Navigation) ======
-const menuBtn = document.getElementById("menuBtn");
-const sideMenu = document.getElementById("sideMenu");
-
-menuBtn.addEventListener("click", () => {
-    sideMenu.classList.toggle("open");
-});
-
-// ===== قائمة جانبية =====
+// ====== القائمة الجانبية ======
 const sideMenu = document.getElementById('sideMenu');
 const menuToggle = document.getElementById('menuToggle');
 
@@ -184,10 +169,10 @@ menuToggle.addEventListener('click', () => {
     sideMenu.classList.toggle('open');
 });
 
-// إغلاق القائمة عند الضغط على خيار
 const menuLinks = document.querySelectorAll('#sideMenu a');
 menuLinks.forEach(link => {
     link.addEventListener('click', () => {
-        sideMenu.classList.remove('open');
+        // تبقى القائمة مفتوحة حتى بعد الانتقال
+        sideMenu.classList.add('open');
     });
 });
