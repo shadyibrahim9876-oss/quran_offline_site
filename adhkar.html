@@ -1,85 +1,31 @@
 <!DOCTYPE html>
-<html lang="ar">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="ar"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>أذكار الصباح والمساء</title>
-<link rel="stylesheet" href="style.css">
-<link rel="icon" href="icon-192.png">
-
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DF7YR27LJC"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-DF7YR27LJC');
-</script>
-
+<link rel="stylesheet" href="style.css?v=3">
 <link rel="manifest" href="manifest.json">
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js')
-      .then(() => console.log('Service Worker Registered'))
-      .catch(err => console.log('SW registration failed:', err));
-  }
-</script>
+<script> if('serviceWorker' in navigator){ navigator.serviceWorker.register('service-worker.js?v=3'); } </script>
 </head>
-<body>
-
-<!-- شريط الأدعية -->
-<div class="top-bar">
-  <div class="scroll-text" id="scrollText"></div>
-</div>
-
-<!-- شريط مواعيد الصلاة -->
-<div class="prayer-bar">
-  <div class="scroll-text" id="prayerTimes"></div>
-</div>
-
-<!-- شريط التاريخ والوقت -->
-<div class="date-time-bar">
-  <div id="dateTime"></div>
-</div>
-
-<!-- القائمة الجانبية -->
-<div class="sidebar" id="sidebar">
-  <div class="menu-toggle" id="menuToggle">☰</div>
-  <ul>
-    <li><a href="index.html">الصفحة الرئيسية</a></li>
-    <li><a href="adhkar.html">أذكار الصباح والمساء</a></li>
-    <li><a href="ruqyah.html">الرقية الشرعية</a></li>
-    <li><a href="duaa_dead.html">دعاء المتوفي</a></li>
-    <li><a href="ahadith.html">أحاديث نبوية</a></li>
-  </ul>
-</div>
-
+<body data-page="adhkar">
+<div class="hamburger" aria-label="القائمة"><div class="bar"></div></div>
+<nav class="menu-panel" id="mainMenu">
+  <h3>القائمة</h3>
+  <a href="index.html">الصفحة الرئيسية (القرآن الكريم)</a>
+  <a href="adhkar.html">أذكار الصباح والمساء</a>
+  <a href="ruqyah.html">الرقية الشرعية</a>
+  <a href="duaa_dead.html">دعاء للمتوفي</a>
+  <a href="ahadith.html">أحاديث نبوية</a>
+</nav>
+<div class="top-bar"><div class="marquee" id="scrollText"></div></div>
+<div class="prayer-bar"><div class="marquee" id="prayerTimes"></div></div>
+<div class="date-time-bar"><div id="dateTime"></div></div>
 <header>
-  <h1>أذكار الصباح والمساء</h1>
+  <img class="logo" src="https://surahquran.com/img/blog/quran.png" alt="القرآن الكريم">
+  <h1 class="page-title">أذكار الصباح والمساء</h1>
 </header>
-
-<main>
-  <ul id="adhkarList"></ul>
+<main class="page-wrap">
+  <div class="page-note">القائمة أدناه مرقمة تلقائيًا.</div>
+  <div id="dynamicList"></div>
 </main>
-
-<footer>
-  <p>صدقة جارية عن جميع المسلمين<br>داعين الله أن يتقبلها منا جميعاً</p>
-  <p class="dev">المطور: فاعل خير</p>
-</footer>
-
-<script src="script.js"></script>
-<script>
-  // تحميل الأذكار من ملف JSON
-  fetch('adhkar.json')
-    .then(res => res.json())
-    .then(data => {
-      const list = document.getElementById('adhkarList');
-      data.adhkar.forEach(item => {
-        const li = document.createElement('li');
-        li.textContent = item;
-        list.appendChild(li);
-      });
-    });
-</script>
-</body>
-</html>
+<footer><p>صدقة جارية عن جميع المسلمين<br>داعين الله أن يتقبلها منا جميعاً</p><p class="dev">المطور: فاعل خير</p></footer><script src="script.js?v=3"></script>
+</body></html>

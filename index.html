@@ -1,92 +1,44 @@
 <!DOCTYPE html>
-<html lang="ar">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="ar"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>القرآن الكريم - الشيخ عبد الباسط عبد الصمد (مجود)</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=3">
 <link rel="icon" href="https://surahquran.com/img/blog/quran.png">
-
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DF7YR27LJC"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-DF7YR27LJC');
-</script>
-
-<!-- Manifest & PWA -->
 <link rel="manifest" href="manifest.json">
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js')
-      .then(() => console.log('Service Worker Registered'))
-      .catch(err => console.log('SW registration failed:', err));
-  }
-</script>
+<script> if('serviceWorker' in navigator){ navigator.serviceWorker.register('service-worker.js?v=3'); } </script>
 </head>
-<body>
-
-<!-- شريط الأدعية العلوي -->
-<div class="top-bar">
-  <div class="scroll-text" id="scrollText"></div>
-</div>
-
-<!-- شريط مواعيد الصلاة -->
-<div class="prayer-bar">
-  <div class="scroll-text" id="prayerTimes"></div>
-</div>
-
-<!-- شريط التاريخ والوقت -->
-<div class="date-time-bar">
-  <div id="dateTime"></div>
-</div>
-
-<!-- القائمة الجانبية -->
-<div id="sideMenu">
-  <span class="menu-toggle" onclick="toggleMenu()">☰</span>
-  <ul id="menuList">
-    <li><a href="adhkar.html">أذكار الصباح و المساء</a></li>
-    <li><a href="index.html">الصفحة الرئيسية قرآن كريم</a></li>
-    <li><a href="ruqyah.html">الرقية الشرعية</a></li>
-    <li><a href="duaa_dead.html">دعاء المتوفي</a></li>
-    <li><a href="ahadith.html">أحاديث نبوية</a></li>
-  </ul>
-</div>
-
+<body data-page="home">
+<div class="hamburger" aria-label="القائمة"><div class="bar"></div></div>
+<nav class="menu-panel" id="mainMenu">
+  <h3>القائمة</h3>
+  <a href="index.html">الصفحة الرئيسية (القرآن الكريم)</a>
+  <a href="adhkar.html">أذكار الصباح والمساء</a>
+  <a href="ruqyah.html">الرقية الشرعية</a>
+  <a href="duaa_dead.html">دعاء للمتوفي</a>
+  <a href="ahadith.html">أحاديث نبوية</a>
+</nav>
+<div class="top-bar"><div class="marquee" id="scrollText"></div></div>
+<div class="prayer-bar"><div class="marquee" id="prayerTimes"></div></div>
+<div class="date-time-bar"><div id="dateTime"></div></div>
 <header>
-  <img src="https://surahquran.com/img/blog/quran.png" alt="القرآن الكريم" class="logo">
+  <img class="logo" src="https://surahquran.com/img/blog/quran.png" alt="القرآن الكريم">
   <h1>مرحباً بكم في موقع القرآن الكريم</h1>
   <h2 class="bismillah">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</h2>
   <h3>الشيخ عبد الباسط عبد الصمد (مجود)</h3>
 </header>
-
-<main>
+<main class="page-wrap">
   <div class="controls">
     <input type="text" id="searchBox" placeholder="ابحث عن اسم السورة">
     <select id="surahSelect"></select>
   </div>
-
-  <ul id="surah-list"></ul>
-
   <div class="player">
     <button id="prevBtn">⏮️</button>
     <button id="playPauseBtn">▶️</button>
     <button id="nextBtn">⏭️</button>
     <button id="repeatBtn">🔁</button>
-    <div class="time">
-      <span id="currentTime">00:00</span> / <span id="duration">00:00</span>
-    </div>
+    <div class="time"><span id="currentTime">00:00</span> / <span id="duration">00:00</span></div>
   </div>
+  <audio id="audioPlayer" preload="none" crossorigin="anonymous"></audio>
 </main>
-
-<footer>
-  <p>صدقة جارية عن جميع المسلمين<br>داعين الله أن يتقبلها منا جميعاً</p>
-  <p class="dev">المطور: فاعل خير</p>
-</footer>
-
-<audio id="audioPlayer"></audio>
-<script src="script.js"></script>
-</body>
-</html>
+<footer><p>صدقة جارية عن جميع المسلمين<br>داعين الله أن يتقبلها منا جميعاً</p><p class="dev">المطور: فاعل خير</p></footer><script src="script.js?v=3"></script>
+</body></html>

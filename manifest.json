@@ -1,11 +1,11 @@
 {
-  "name": "القرآن الكريم - الشيخ عبد الباسط عبد الصمد",
+  "name": "القرآن الكريم - الشيخ عبد الباسط (مجود)",
   "short_name": "القرآن الكريم",
+  "lang": "ar",
   "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#0b6623",
-  "theme_color": "#0b6623",
-  "orientation": "portrait",
+  "background_color": "#145a32",
+  "theme_color": "#0d3d2a",
   "icons": [
     {
       "src": "icon-192.png",
